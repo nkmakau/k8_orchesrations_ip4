@@ -1,0 +1,46 @@
+version: "3.7"
+services:
+  client:
+    image: nkmakau/yolo-client:1.0
+    restart: unless-stopped
+    build:
+      context: .
+      args:
+        - BUILD_DATE
+      dockerfile: client.Dockerfile
+    links:
+      - backend
+    ports:
+      - 3000:3000
+    networks:
+      - yolomy
+
+  backend:
+    image: nkmakau/yolo-backend:1.0
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: backend.Dockerfile
+    ports:
+      - 5000:5000
+    networks:
+      - yolomy
+    depends_on:
+      - mongo
+      
+  mongo:
+    image: mongo
+    ports:
+      - 27017:27017
+    volumes:
+      - dbdata:/data/dbdata
+    networks:
+      - yolomy
+
+networks:
+  yolonet:
+    driver: bridge
+
+volumes:
+  dbdata:
+  
