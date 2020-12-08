@@ -38,7 +38,7 @@ services:
       - yolomy
 
 networks:
-  yolonet:
+  yolomy:
     driver: bridge
 
 volumes:
