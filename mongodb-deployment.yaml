@@ -5,7 +5,7 @@ metadata:
   namespace: "yolomy"
   labels:
     #Project ID
-    app: yolomy-mongo
+    app: yolomy
 spec:
   ports:
     - nodePort: 32425
