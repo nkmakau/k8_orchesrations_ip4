@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: yolo-backend-service
+  namespace: "yolomy"
+  labels:
+    #Project ID
+    app: yolomy-backend
+spec:
+  ports:
+    - nodePort: 32420
+      port: 5000
+      targetPort: 5000
+      protocol: TCP
+  type: LoadBalancer
+  selector:
+    app: yolomy-backend
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: yolomy-backend
+  namespace: "yolomy"
+  labels:
+    app: yolomy-backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: yolomy-backend
+  template:
+    metadata:
+      labels:
+        app: yolomy-backend
+    spec:
+      containers:
+        - name: yolomy-backend
+          image: noshmak/yolo-backend:1.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3000
+        - name: nginx-2
+          image: nginx:latest
+          imagePullPolicy: Always
