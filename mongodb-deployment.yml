@@ -15,7 +15,7 @@ spec:
   
   selector:
     app: yolomy-mongo
-    type: ClusterIP
+    # type: ClusterIP
 
 ---
 apiVersion: apps/v1
