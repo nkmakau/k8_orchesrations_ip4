@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: yolo-client-service
+  namespace: "yolomy"
+  labels:
+    #Project ID
+    app: yolomy-client
+spec:
+  ports:
+    - nodePort: 32415
+      port: 3000
+      targetPort: 3000
+      protocol: TCP
+  type: LoadBalancer
+  selector:
+    app: yolomy-client
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: yolomy-client
+  namespace: "yolomy"
+  labels:
+    app: yolomy-client
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: yolomy-client
+  template:
+    metadata:
+      labels:
+        app: yolomy-client
+    spec:
+      containers:
+        - name: yolomy-client
+          image: noshmak/yolo-client:1.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3000
+        - name: nginx-2
+          image: nginx:latest
+          imagePullPolicy: Always
