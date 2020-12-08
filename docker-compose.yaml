@@ -1,7 +1,7 @@
 version: "3.7"
 services:
   client:
-    image: nkmakau/yolo-client:1.0
+    image: noshmak/yolo-client:1.0
     restart: unless-stopped
     build:
       context: .
@@ -16,7 +16,7 @@ services:
       - yolomy
 
   backend:
-    image: nkmakau/yolo-backend:1.0
+    image: noshmak/yolo-backend:1.0
     restart: unless-stopped
     build:
       context: .
