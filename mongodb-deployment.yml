@@ -8,12 +8,12 @@ metadata:
     app: yolomy-mongo
 spec:
   ports:
-    - nodeport: 32425
-      port: 27017
+    # - nodePort: 32425
+    - port: 27017
       targetPort: 27017
       protocol: TCP
   selector:
-    name: yolomy-mongo
+    app: yolomy-mongo
     
 ---
 apiVersion: apps/v1
@@ -24,7 +24,7 @@ metadata:
   labels:
     app: yolomy-mongo
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app: yolomy-mongo
@@ -39,11 +39,4 @@ spec:
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 27017
-          volumeMounts:
-            - name: mongo-persistent-storage
-              mountPath: /data/db
-      volumes:
-        - name: mongo-persistent-storage
-          gcePersistentDisk:
-            pdName: mongo-disk
-            fsType: ext4
+          
